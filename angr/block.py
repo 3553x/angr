@@ -12,6 +12,10 @@ DEFAULT_VEX_ENGINE = VEXLifter(None)  # this is only used when Block is not init
 
 
 class Block(Serializable):
+    """
+    Block is a representation of a basic block, a straight-line code sequence with no branches in or out except at the
+    entry and exit.
+    """
     BLOCK_MAX_SIZE = 4096
 
     __slots__ = ['_project', '_bytes', '_vex', 'thumb', '_capstone', 'addr', 'size', 'arch', '_instructions',
@@ -132,6 +136,9 @@ class Block(Serializable):
         return not self == other
 
     def pp(self):
+        """"
+        Pretty-print the disassembly of this block to stdout.
+        """
         return self.capstone.pp()
 
     @property
@@ -213,6 +220,10 @@ class Block(Serializable):
 
     @property
     def instructions(self):
+        """
+        Returns the number of instructions in this block.
+        :return:    The number of instructions.
+        """
         if not self._instructions and self._vex is None:
             # initialize from VEX
             _ = self.vex
